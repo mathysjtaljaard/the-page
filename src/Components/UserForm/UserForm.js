@@ -1,7 +1,7 @@
 import * as Yup from 'yup'
-import { Formik } from 'formik'
+import { Formik, Form } from 'formik'
 
-import Form from "react-bootstrap/Form";
+// import Form from "react-bootstrap/Form";
 
 import FormInput from "./FormInput";
 import SubmitResetCustomButtonGroup from "./../Things/SubmitResetCustomButtonGroup"
@@ -18,7 +18,7 @@ const UserForm = ({ onSubmitHandler, onCloseFormHandler }) => {
     const validationSchema = Yup.object(
         {
             username: Yup.string().min(5, 'Must be >= to 5 characters').max(50, 'Must be 50 characters or less').required('Required'),
-            age: Yup.number().min(1, 'Age has to be greater than 0').max(140, 'Wowza I hope you are not that old').required('Required')
+            age: Yup.number().min(1, 'Age has to be greater than 0').required('Required')
         }
     )
     return (
@@ -28,28 +28,29 @@ const UserForm = ({ onSubmitHandler, onCloseFormHandler }) => {
         }}
             validationSchema={validationSchema}
             onSubmit={onSubmitHandlerFormik}
+            initialErrors={{ username: "Required", age: "Required" }}
+            validateOnMount={true}
         >
             {props => <UserFormTemplate {...props} onCloseFormHandler={onCloseFormHandler} />}
         </Formik >
     )
 }
 
-const UserFormTemplate = ({ handleSubmit, handleChange, handleBlur, handleReset, values, touched, errors, onCloseFormHandler }) => {
+const UserFormTemplate = ({ handleSubmit, handleChange, handleBlur, handleReset,
+    dirty, values, touched, errors, onCloseFormHandler }) => {
 
-    const isValidUsername = (!!touched.username === false || touched.username) && !errors.username;
-    const isValidAge = (!!touched.age === false || touched.age) && !errors.age;
-    const submitDisabled = !((touched?.username && touched?.age) && (isValidUsername && isValidAge))
+    const submitDisabled = !(dirty && (!errors.username && !errors.age))
 
     return (
         <div>
-            < Form noValidate onSubmit={handleSubmit} >
+            <Form noValidate onSubmit={handleSubmit} >
                 <CloseButtonRight onCloseFormHandler={onCloseFormHandler} />
                 <FormInput id="username" type="text" labelValue="Username" placeHolder="Enter your username"
                     onChangeHandler={handleChange} onBlur={handleBlur} touched={touched.username}
-                    message={errors.username} value={values.username} isInputValid={isValidUsername} />
+                    errorMessage={errors.username} value={values.username} />
                 <FormInput id="age" type="number" labelValue="Age" placeHolder="Enter your age in years"
                     onChangeHandler={handleChange} onBlur={handleBlur} touched={touched.age}
-                    message={errors.age} value={values.age} isInputValid={isValidAge} />
+                    errorMessage={errors.age} value={values.age} />
                 <SubmitResetCustomButtonGroup
                     resetButtonValue="Reset Form" submitButtonValue="Add User"
                     isDisabled={submitDisabled}

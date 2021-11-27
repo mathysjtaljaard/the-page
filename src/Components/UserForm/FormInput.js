@@ -1,7 +1,7 @@
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
-const FormInput = ({ id, labelValue, placeHolder, onChangeHandler, onBlur, value, message, type, touched, isInputValid }) => {
+const FormInput = ({ id, labelValue, placeHolder, onChangeHandler, onBlur, value, errorMessage, type }) => {
 
     return (
         < Row >
@@ -9,8 +9,8 @@ const FormInput = ({ id, labelValue, placeHolder, onChangeHandler, onBlur, value
                 <Form.Label>{labelValue}</Form.Label>
                 <Form.Control type={type} name={id} placeholder={placeHolder}
                     onBlur={onBlur} onChange={onChangeHandler} value={value}
-                    isInvalid={!!touched && !isInputValid} isValid={!!touched && isInputValid} />
-                <Form.Control.Feedback type="invalid">{message}</Form.Control.Feedback>
+                    isInvalid={errorMessage} isValid={!errorMessage} />
+                <Form.Control.Feedback type="invalid">{errorMessage}</Form.Control.Feedback>
             </Form.Group>
         </Row >)
 }

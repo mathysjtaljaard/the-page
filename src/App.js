@@ -6,6 +6,7 @@ import Container from "react-bootstrap/Container";
 import UserList from "./Components/User/UserList";
 import UserForm from "./Components/UserForm/UserForm";
 import { useState } from "react";
+import NaviationBar from "./Components/Navigation/NavigationBar";
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -26,37 +27,44 @@ function App() {
   };
 
   return (
-    <Container className="p-5">
-      <Container className="p-3 bg-light border rounded">
-        {!showAddUserForm && (
-          <Button varient="primary" type="button" onClick={shouldShowUserform}>
-            Open User Form
-          </Button>
-        )}
-        {showAddUserForm && (
-          <Row>
-            <Col>
-              <UserForm
-                onSubmitHandler={onFormSubmitHandler}
-                onCloseFormHandler={shouldShowUserform}
-              />
-            </Col>
-          </Row>
-        )}
-      </Container>
-
-      <Container>
-        <Row>
-          <br />
-        </Row>
-      </Container>
-
-      {users.length > 0 && (
-        <Container className="p-3 bg-light border">
-          <UserList users={users} />
+    <>
+      <NaviationBar />
+      <Container className="p-5">
+        <Container className="p-3 bg-light border rounded">
+          {!showAddUserForm && (
+            <Button
+              varient="primary"
+              type="button"
+              onClick={shouldShowUserform}
+            >
+              Open User Form
+            </Button>
+          )}
+          {showAddUserForm && (
+            <Row>
+              <Col>
+                <UserForm
+                  onSubmitHandler={onFormSubmitHandler}
+                  onCloseFormHandler={shouldShowUserform}
+                />
+              </Col>
+            </Row>
+          )}
         </Container>
-      )}
-    </Container>
+
+        <Container>
+          <Row>
+            <br />
+          </Row>
+        </Container>
+
+        {users.length > 0 && (
+          <Container className="p-3 bg-light border">
+            <UserList users={users} />
+          </Container>
+        )}
+      </Container>
+    </>
   );
 }
 
