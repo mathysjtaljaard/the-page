@@ -9,6 +9,7 @@ import { Fragment, useState } from "react";
 import NaviationBar from "./Components/Navigation/NavigationBar";
 
 function App() {
+
   const [users, setUsers] = useState([]);
   const [showAddUserForm, setShowUserForm] = useState(false);
 
@@ -52,16 +53,19 @@ function App() {
           )}
         </Container>
 
-        <Container>
-          <Row>
-            <br />
-          </Row>
-        </Container>
 
         {users.length > 0 && (
-          <Container className="p-3 bg-light border" lg="auto">
-            <UserList users={users} />
-          </Container>
+          <>
+            <Container>
+              <Row>
+                <br />
+              </Row>
+            </Container>
+
+            <Container className="p-3 bg-light border rounded" lg="auto">
+              <UserList users={users} />
+            </Container>
+          </>
         )}
       </Container>
     </Fragment>

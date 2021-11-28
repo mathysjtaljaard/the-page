@@ -2,7 +2,6 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
 const FormInput = ({ id, labelValue, placeHolder, onChangeHandler, onBlur, value, errorMessage, type }) => {
-
     return (
         < Row >
             <Form.Group className="mb-3" controlId={`controller-${id}`}>
